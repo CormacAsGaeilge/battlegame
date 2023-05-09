@@ -12,7 +12,10 @@
     "aws-sdk": "^2.1030.0"
   },
   "devDependencies": {
+    "typescript": "^4.5.5",
     "serverless": "^2.72.2",
-    "serverless-offline": "^8.6.0"
+    "serverless-offline": "^8.6.0",
+    "@types/aws-lambda": "^8.10.87",
+    "@types/node": "^16.11.17"
   }
 }
