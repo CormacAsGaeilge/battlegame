@@ -19,3 +19,10 @@ functions:
           path: player/{uuid}
           method: get
           cors: true
+  postPlayer:
+    handler: handlers/apigw/player/post/index.handler
+    events:
+      - http:
+          path: player
+          method: post
+          cors: true
