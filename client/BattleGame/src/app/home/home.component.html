@@ -1,1 +1,11 @@
-<p>home works!</p>
+<h1>Battle Game</h1>
+<h2>Create a Player</h2>
+
+<form [formGroup]="playerForm">
+    <mat-form-field appearance="fill">
+        <mat-label>Player Name</mat-label>
+        <input matInput formControlName="name" max="20" />
+    </mat-form-field>
+    <button mat-raised-button type="submit">Create Player!</button>
+</form>
+  
