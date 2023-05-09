@@ -61,7 +61,7 @@ const processBattleHandler: SQSHandler = async (event: SQSEvent): Promise<void> 
         playersTurn = !playersTurn;
       }
       console.log("BATTLE ENDS!");
-      const goldYeild = Math.round((10 + (Math.random() * 10))/100);
+      const goldYeild = Math.round((10 + (Math.random() * 10)))/100;
       if(player.currentHP <= 0) {
         //player losses
         const goldLost = player.gold*goldYeild;
