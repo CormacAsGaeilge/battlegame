@@ -6,3 +6,16 @@ provider:
   region: us-east-1
   memorySize: 256
   timeout: 10
+
+plugins:
+  - serverless-offline
+
+
+functions:
+  getPlayer:
+    handler: handlers/apigw/player/get/index.handler
+    events:
+      - http:
+          path: player/{uuid}
+          method: get
+          cors: true
