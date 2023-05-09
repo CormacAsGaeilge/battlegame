@@ -1,6 +1,7 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { PlayerService } from "../../../../services/dynamoDb/player";
 import { SQSPublisher } from "../../../../services/sqs";
+import { Response } from '../../../../models/response';
 
 const playerService = new PlayerService();
 const sqsPublisher = new SQSPublisher();
@@ -10,26 +11,17 @@ const postBattle = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyR
     const playerId = event.pathParameters?.uuid;
 
     if (!playerId) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ message: "Player ID is required" }),
-      };
+      return new Response(400, JSON.stringify({ message: "Player ID is required" })).toJSON();
     }
 
     if (!event.body) {
-        return {
-          statusCode: 400,
-          body: JSON.stringify({ message: "Battle payload is required" }),
-        };
+      return new Response(400, JSON.stringify({ message: "Battle payload is required" })).toJSON();
     }
 
     const { opponentUUID } = JSON.parse(event.body);
 
     if (!opponentUUID) {
-        return {
-          statusCode: 400,
-          body: JSON.stringify({ message: "opponentUUID is required" }),
-        };
+      return new Response(400, JSON.stringify({ message: "opponentUUID is required" })).toJSON();
     }
 
     await sqsPublisher.publish({
@@ -39,10 +31,7 @@ const postBattle = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyR
     });
 
 
-    return {
-      statusCode: 200,
-      body: "Battle Submitted",
-    };
+    return new Response(200,"Battle Submitted").toJSON();
   } catch (error) {
     console.error(error);
     return {
