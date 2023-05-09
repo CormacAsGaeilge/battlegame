@@ -19,6 +19,7 @@ export class SQSPublisher {
                 throw new Error("No QueueUrl found");
             
             this.queueUrl = response.QueueUrl;
+            console.log(`Initialised Queue. URL: ${this.queueUrl}`);
         } catch (error) {
             console.error('Error fetching Queue URL:', error);
         }
@@ -26,7 +27,7 @@ export class SQSPublisher {
 
     async publish(data: any) {
         if(!this.queueUrl)
-            this.init();
+            await this.init();
 
         const sendMessageCommand = new SendMessageCommand({
             QueueUrl: this.queueUrl,

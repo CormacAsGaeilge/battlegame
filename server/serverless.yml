@@ -17,6 +17,12 @@ provider:
         - dynamodb:Scan
       Resource:
         - 'Fn::GetAtt': [PlayerTable, Arn]
+    - Effect: Allow
+      Action:
+        - sqs:GetQueueUrl
+        - sqs:SendMessage
+      Resource:
+        - 'Fn::GetAtt': [BattlesQueue, Arn]
 
 plugins:
   - serverless-offline
