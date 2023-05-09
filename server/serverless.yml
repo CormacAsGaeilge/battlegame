@@ -23,6 +23,15 @@ provider:
         - sqs:SendMessage
       Resource:
         - 'Fn::GetAtt': [BattlesQueue, Arn]
+  apiKeys:
+    - battleGameClientKey
+  usagePlan:
+    quota:
+      limit: 1000
+      period: MONTH
+    throttle:
+      burstLimit: 20
+      rateLimit: 10
 
 plugins:
   - serverless-offline
@@ -35,24 +44,54 @@ functions:
       - http:
           path: player/{uuid}
           method: get
-          cors: true
+          private: true
+          cors:
+            origin: 'http://localhost:4200'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false
   postPlayer:
     handler: handlers/apigw/player/post/index.handler
     events:
       - http:
           path: player
           method: post
-          cors: true
+          private: true
+          cors:
+            origin: 'http://localhost:4200'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false
   submitBattle:
     handler: handlers/apigw/battle/post/index.handler
     events:
       - http:
           path: player/{uuid}/battle
           method: post
-          cors: true
+          private: true
+          cors:
+            origin: 'http://localhost:4200'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false
 
   processBattleWorker:
-    handler: handlers/sqs/process-battle-worker
+    handler: handlers/sqs/process-battle-worker.handler
     events:
       - sqs:
           arn:
