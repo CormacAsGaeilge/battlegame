@@ -89,6 +89,23 @@ functions:
               - X-Amz-Security-Token
               - X-Amz-User-Agent
             allowCredentials: false
+  getLeaderboard:
+    handler: handlers/apigw/leaderboard/get/index.handler
+    events:
+      - http:
+          path: leaderboard
+          method: get
+          private: true
+          cors:
+            origin: 'http://localhost:4200'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false
 
   processBattleWorker:
     handler: handlers/sqs/process-battle-worker.handler
@@ -114,9 +131,23 @@ resources:
         AttributeDefinitions:
           - AttributeName: uuid
             AttributeType: S
+          - AttributeName: totalStolenGold
+            AttributeType: N
         KeySchema:
           - AttributeName: uuid
             KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: TotalStolenGoldIndex
+            KeySchema:
+              - AttributeName: totalStolenGold
+                KeyType: RANGE
+              - AttributeName: uuid
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1

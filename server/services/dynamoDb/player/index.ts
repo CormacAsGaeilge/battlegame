@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { MAX_LUCK, MIN_LEVEL, MIN_LUCK, NEXT_LVL, Player, START_BASE_ATTACK, START_EXP, START_GOLD, START_HIT_POINTS } from "../../../models/player";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
+import { DynamoDBDocumentClient, GetCommand, PutCommand, QueryCommand } from "@aws-sdk/lib-dynamodb";
 
 export class PlayerService {
   static REGION = 'us-east-1';
@@ -44,6 +44,37 @@ export class PlayerService {
         }));
         return newPlayer;
     }
+
+    
+    async getLeaderboard(): Promise<Player[]> {
+      const result = await this.client.send(new QueryCommand({
+        TableName: PlayerService.TABLE_NAME,
+        IndexName: 'TotalStolenGoldIndex',
+        KeyConditionExpression: 'uuid = :uuid',
+        ExpressionAttributeValues: {
+          ':uuid': { S: 'ANY_STRING' },
+        },
+        ScanIndexForward: false,
+        Limit: 10,
+      }));
+
+      return result.Items?.map((item) => {
+        return {
+          uuid: item.uuid.S!,
+          name: item.name.S!,
+          gold: Number(item.gold.N),
+          startBA: Number(item.startBA.N),
+          startHP: Number(item.startHP.N),
+          level: Number(item.level.N),
+          experience: Number(item.experience.N),
+          nextLvl: Number(item.nextLvl.N),
+          currentBA: Number(item.currentBA.N),
+          currentHP: Number(item.currentHP.N),
+          luck: Number(item.luck.N),
+          totalStolenGold: Number(item.totalStolenGold.N),
+        };
+      }) || [];
+  }
 
     private generateRandomLuck(): number {
         return MIN_LUCK + (Math.random() * (MAX_LUCK - MIN_LUCK)); // random between 0.004 ande 0.009
