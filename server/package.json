@@ -4,7 +4,8 @@
   "description": "This will be the backend server for the battlegame",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "offline": "npm run build && serverless offline"
   },
   "author": "CormacWhite",
   "license": "ISC",
