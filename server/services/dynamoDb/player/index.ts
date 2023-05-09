@@ -144,7 +144,7 @@ export class PlayerService {
     }
 
   
-     async createPlayer(name: any) {
+     async createPlayer(name: any): Promise<Player> {
         const newPlayer: Player = {
             uuid: uuidv4(),
             name: name,
@@ -159,6 +159,7 @@ export class PlayerService {
             totalStolenGold: 0
         };
         this.players.push(newPlayer);
+        return newPlayer;
     }
 
     private generateRandomLuck(): number {
