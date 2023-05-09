@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "offline": "npm run build && serverless offline"
+    "offline": "npm run build && serverless offline",
+    "deploy": "npm run build && serverless"
   },
   "author": "CormacWhite",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-sqs": "^3.329.0",
     "aws-sdk": "^2.1030.0",
     "uuid": "^9.0.0"
   },

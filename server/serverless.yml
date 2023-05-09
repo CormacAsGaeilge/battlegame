@@ -26,8 +26,31 @@ functions:
           path: player
           method: post
           cors: true
+  submitBattle:
+    handler: handlers/apigw/battle/post/index.handler
+    events:
+      - http:
+          path: player/{uuid}/battle
+          method: post
+          cors: true
+
+  processBattleWorker:
+    handler: handlers/sqs/process-battle-worker
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - BattlesQueue
+              - Arn
+          batchSize: 10
+
 resources:
   Resources:
+    BattlesQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: battles-queue
+        VisibilityTimeout: 30
     PlayerTable:
       Type: AWS::DynamoDB::Table
       Properties:
