@@ -1,4 +1,3 @@
-// src/handler.ts
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { PlayerService } from "../../../../services/dynamoDb/player";
 

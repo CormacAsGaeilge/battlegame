@@ -1,7 +1,10 @@
-// src/services/playerService.ts
+import { v4 as uuidv4 } from "uuid";
 import { Player } from "../../../models/player";
 
 export class PlayerService {
+
+    private static readonly START_GOLD: number = 5000;
+
     // fake db
   private players: Player[] = [
     {
@@ -9,7 +12,7 @@ export class PlayerService {
       name: 'Player 11',
       gold: 869229069,
       startBA: 70,
-      StartHP: 100,
+      startHP: 100,
       level: 21,
       experience: 0,
       currentBA: 0,
@@ -22,7 +25,7 @@ export class PlayerService {
       name: 'Player 16',
       gold: 997256771,
       startBA: 70,
-      StartHP: 104,
+      startHP: 104,
       level: 25,
       experience: 0,
       currentBA: 0,
@@ -35,7 +38,7 @@ export class PlayerService {
       name: 'Player 12',
       gold: 845258248,
       startBA: 69,
-      StartHP: 95,
+      startHP: 95,
       level: 34,
       experience: 0,
       currentBA: 0,
@@ -48,7 +51,7 @@ export class PlayerService {
       name: 'Player 4',
       gold: 407055243,
       startBA: 68,
-      StartHP: 100,
+      startHP: 100,
       level: 19,
       experience: 0,
       currentBA: 0,
@@ -61,7 +64,7 @@ export class PlayerService {
       name: 'Player 4',
       gold: 272056379,
       startBA: 67,
-      StartHP: 97,
+      startHP: 97,
       level: 27,
       experience: 0,
       currentBA: 0,
@@ -74,7 +77,7 @@ export class PlayerService {
       name: 'Player 15',
       gold: 187743391,
       startBA: 72,
-      StartHP: 98,
+      startHP: 98,
       level: 30,
       experience: 0,
       currentBA: 0,
@@ -87,7 +90,7 @@ export class PlayerService {
       name: 'Player 12',
       gold: 74451745,
       startBA: 66,
-      StartHP: 101,
+      startHP: 101,
       level: 40,
       experience: 0,
       currentBA: 0,
@@ -100,7 +103,7 @@ export class PlayerService {
       name: 'Player 4',
       gold: 489648538,
       startBA: 69,
-      StartHP: 102,
+      startHP: 102,
       level: 1,
       experience: 0,
       currentBA: 0,
@@ -113,7 +116,7 @@ export class PlayerService {
       name: 'Player 1',
       gold: 752060157,
       startBA: 75,
-      StartHP: 95,
+      startHP: 95,
       level: 19,
       experience: 0,
       currentBA: 0,
@@ -126,7 +129,7 @@ export class PlayerService {
       name: 'Player 9',
       gold: 82740054,
       startBA: 73,
-      StartHP: 101,
+      startHP: 101,
       level: 9,
       experience: 0,
       currentBA: 0,
@@ -136,7 +139,29 @@ export class PlayerService {
     }
   ];
 
-  async getPlayerById(uuid: string): Promise<Player | null> {
-    return this.players.find((player) => player.uuid === uuid) || null;
-  }
+    async getPlayerById(uuid: string): Promise<Player | null> {
+        return this.players.find((player) => player.uuid === uuid) || null;
+    }
+
+  
+     async createPlayer(name: any) {
+        const newPlayer: Player = {
+            uuid: uuidv4(),
+            name: name,
+            gold: PlayerService.START_GOLD,
+            startBA: 70,
+            startHP: 100,
+            level: 1,
+            experience: 0,
+            currentBA: 70,
+            currentHP: 100,
+            luck: this.generateRandomLuck(),
+            totalStolenGold: 0
+        };
+        this.players.push(newPlayer);
+    }
+
+    private generateRandomLuck(): number {
+        return 0.004 + (Math.random() * 0.009); // random between 0.004 ande 0.009
+    }
 }
