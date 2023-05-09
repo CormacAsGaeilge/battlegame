@@ -26,3 +26,20 @@ functions:
           path: player
           method: post
           cors: true
+resources:
+  Resources:
+    PlayerTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: PlayerTable
+        AttributeDefinitions:
+          - AttributeName: uuid
+            AttributeType: S
+        KeySchema:
+          - AttributeName: uuid
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        StreamSpecification:
+          StreamViewType: NEW_IMAGE
