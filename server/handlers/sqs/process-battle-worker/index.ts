@@ -87,7 +87,7 @@ const processBattleHandler: SQSHandler = async (event: SQSEvent): Promise<void> 
 function calculateAttackPower(player: Player): number {
   const healthPercentage = Math.ceil((player.currentHP * 100) / player.startHP) / 100;
   console.log(healthPercentage);
-  return (healthPercentage> 0.5) ? player.currentBA*healthPercentage: player.currentBA*0,5;
+  return (healthPercentage> 0.5) ? player.currentBA*healthPercentage: player.currentBA*0.5;
 }
 
 function attack(attacker:Player, defender: Player) {
