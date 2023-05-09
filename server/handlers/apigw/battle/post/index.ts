@@ -32,7 +32,7 @@ const postBattle = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyR
         };
     }
 
-    sqsPublisher.publish({
+    await sqsPublisher.publish({
         playerId,
         opponentUUID,
         timestamp: new Date().getTime()

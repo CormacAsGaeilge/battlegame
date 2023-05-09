@@ -9,7 +9,6 @@ export class SQSPublisher {
 
     constructor() {
         this.sqsClient = new SQSClient({ region: SQSPublisher.REGION });
-        
     }
 
     async init() {
@@ -33,7 +32,7 @@ export class SQSPublisher {
             QueueUrl: this.queueUrl,
             MessageBody: JSON.stringify(data),
         });
-      
+        console.log(`Publishing to ${SQSPublisher.QUEUE_NAME}`);
         await this.sqsClient.send(sendMessageCommand);
     }
 }
