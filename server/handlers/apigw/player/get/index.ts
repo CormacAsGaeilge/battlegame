@@ -5,7 +5,7 @@ const playerService = new PlayerService();
 
 const getPlayer = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   try {
-    const playerId = event.pathParameters?.id;
+    const playerId = event.pathParameters?.uuid;
 
     if (!playerId) {
       return {
