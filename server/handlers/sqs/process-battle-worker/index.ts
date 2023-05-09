@@ -61,7 +61,7 @@ const processBattleHandler: SQSHandler = async (event: SQSEvent): Promise<void> 
         playersTurn = !playersTurn;
       }
       console.log("BATTLE ENDS!");
-      const goldYeild = 10 + (Math.random() * 10);
+      const goldYeild = Math.round((10 + (Math.random() * 10))/100);
       if(player.currentHP <= 0) {
         //player losses
         const goldLost = player.gold*goldYeild;
@@ -75,6 +75,11 @@ const processBattleHandler: SQSHandler = async (event: SQSEvent): Promise<void> 
         player.gold = player.gold + goldWon;
         opponent.gold = opponent.gold - goldWon;
       }
+
+      player.currentHP = player.startHP;
+      opponent.currentHP = opponent.startHP;
+      await playerService.updatePlayer(player);
+      await playerService.updatePlayer(opponent);
 
     }
   } catch (error) {
