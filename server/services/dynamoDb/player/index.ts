@@ -44,6 +44,14 @@ export class PlayerService {
         }));
         return newPlayer;
     }
+    
+    async updatePlayer(player: Player) {
+      await this.client.send(new PutCommand({
+        TableName: PlayerService.TABLE_NAME,
+        Item: player
+      }));
+    return player;
+    }
 
     
     async getLeaderboard(): Promise<Player[]> {
