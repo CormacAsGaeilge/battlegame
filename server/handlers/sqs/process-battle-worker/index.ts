@@ -67,12 +67,14 @@ const processBattleHandler: SQSHandler = async (event: SQSEvent): Promise<void> 
         const goldLost = player.gold*goldYeild;
         console.log(`DEFEAT! Player losses ${goldLost}`);
         opponent.gold = opponent.gold + goldLost;
+        opponent.totalStolenGold += goldLost;
         player.gold = player.gold - goldLost;
       } else {
         //opponent losses
         const goldWon = opponent.gold*goldYeild;
         console.log(`VICTORY! Player wins ${goldWon}`);
         player.gold = player.gold + goldWon;
+        player.totalStolenGold += goldWon;
         opponent.gold = opponent.gold - goldWon;
       }
 

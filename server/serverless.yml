@@ -136,6 +136,8 @@ resources:
         KeySchema:
           - AttributeName: uuid
             KeyType: HASH
+          - AttributeName: totalStolenGold
+            KeyType: RANGE
         GlobalSecondaryIndexes:
           - IndexName: TotalStolenGoldIndex
             KeySchema:

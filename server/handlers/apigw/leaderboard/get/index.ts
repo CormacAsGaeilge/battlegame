@@ -4,7 +4,7 @@ import { Response } from "../../../../models/response";
 
 const playerService = new PlayerService();
 
-const getPlayer = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+const getLeaderboard = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   try {
 
     const players = await playerService.getLeaderboard();
@@ -12,7 +12,7 @@ const getPlayer = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRe
     if (!players) {
       return new Response(404, JSON.stringify({ message: "players not found" })).toJSON();
     }
-
+    
     return new Response(200, JSON.stringify(players)).toJSON();
   } catch (error) {
     console.error(error);
@@ -20,4 +20,4 @@ const getPlayer = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyRe
   }
 };
 
-module.exports.handler = getPlayer;
+module.exports.handler = getLeaderboard;

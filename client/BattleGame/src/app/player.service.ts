@@ -28,6 +28,6 @@ export class PlayerService {
   }
 
   getLeaderBoard(): Observable<Player[]> {
-    return this.http.get<Player[]>(`${this.apiUrl}/players`, { headers: this.headers});
+    return this.http.get<Player[]>(`${this.apiUrl}/leaderboard`, { headers: this.headers});
   }
 }
