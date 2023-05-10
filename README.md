@@ -25,7 +25,7 @@ Navigate to the `/client/BattleGame` folder in your terminal and run the followi
 
 The Client will be running on `localhost:4200` which should have CORS permissions to hit the backend endpoints.
 
-You will need to add a `config.ts` to the route of the `/client` folder matching the format of the `config.sample.ts` file. You can find the API URL and Key in AWS API Gateway once the backend has deployed.
+You will need to add a `config.ts` to the route of the `/client/BattleGame/app` folder matching the format of the `config.sample.ts` file. You can find the API URL and Key in AWS API Gateway once the backend has deployed.
 
 ## Functionaly Present
 - Create Player Endpoint (With DynamoDb persistence)
