@@ -1,7 +1,7 @@
 <h1>Battle Game</h1>
 <h2>Create a Player</h2>
 
-<form [formGroup]="playerForm">
+<form [formGroup]="playerForm" (ngSubmit)="submit()">
     <mat-form-field appearance="fill">
         <mat-label>Player Name</mat-label>
         <input matInput formControlName="name" max="20" />
